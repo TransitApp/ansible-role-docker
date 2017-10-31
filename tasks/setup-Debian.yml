@@ -38,3 +38,19 @@
     repo: "{{ docker_apt_repository }}"
     state: present
     update_cache: yes
+
+- name: Create Docker systemd change directory
+  file:
+    path: /etc/systemd/system/docker.service.d/
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Lower file limit increase
+  copy:
+    src: customexec.conf
+    dest: /etc/systemd/system/docker.service.d/customexec.conf
+    mode: 0644
+    owner: root
+    group: root
